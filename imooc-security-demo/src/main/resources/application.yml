@@ -23,4 +23,9 @@ imooc:
   security:
     browser:
 #      loginPage: /demo-signIn.html
-      LoginType: REDIRECT
+      LoginType: JSON
+    code:
+      image:
+        lenght: 6
+        width: 100
+        url: /user,/user/*
