@@ -14,18 +14,16 @@ spring:
 
 
 
-security:
-  basic:
-    enabled: false
+
 
 #配置自己的登录页面
-imooc:
-  security:
-    browser:
-#      loginPage: /demo-signIn.html
-      LoginType: JSON
-    code:
-      image:
-        lenght: 6
-        width: 100
-        url: /user,/user/*
+#imooc:
+#  security:
+#    browser:
+##      loginPage: /demo-signIn.html
+#      LoginType: JSON
+#    code:
+#      image:
+#        lenght: 6
+#        width: 100
+#        url: /user,/user/*

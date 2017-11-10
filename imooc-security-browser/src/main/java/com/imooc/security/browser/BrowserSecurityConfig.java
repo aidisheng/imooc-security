@@ -9,9 +9,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * Created by 邓仁波 on 2017-11-2.
@@ -24,6 +29,18 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private ImoocAuthenticationSuccessHandler imoocAuthenticationSuccessHandler;
     @Autowired
     private ImoocAuthenticationFailureHandler imoocAuthenticationFailureHandler;
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(true); 配置该属性第一次启动会建表 第二次启动要屏蔽 因为表已经存在 会报错
+        return tokenRepository;
+    }
 
     //登录密码加密
     @Bean
@@ -47,6 +64,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/form")//表单登录提交路径
                 .successHandler(imoocAuthenticationSuccessHandler)//登录成功进行自己的操作
                 .failureHandler(imoocAuthenticationFailureHandler)//登录失败进行自己的操作
+                .and()
+                .rememberMe().tokenRepository(persistentTokenRepository())//配置记住我的数据源
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())//配置记住我的过期时间
+                .userDetailsService(userDetailsService)//设置登录逻辑
 //        //弹窗口登录
 //        http.httpBasic()
                 .and()
