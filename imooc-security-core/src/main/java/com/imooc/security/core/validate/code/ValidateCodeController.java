@@ -35,7 +35,6 @@ public class ValidateCodeController {
         ImageCode imageCode = (ImageCode) imageCodeGenerator.createImageCode(new ServletWebRequest(request));
         //往session中提交k,v
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
-
         ImageIO.write(imageCode.getImage(), "jpg", response.getOutputStream());
     }
 
@@ -45,7 +44,7 @@ public class ValidateCodeController {
         //往session中提交k,v
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, smsCode);
         String mobile=ServletRequestUtils.getRequiredStringParameter(request,"mobile");
-        smsCodeSender.send("130", mobile);
+        smsCodeSender.send(mobile,smsCode.getCode());
     }
 
 }

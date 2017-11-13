@@ -75,7 +75,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //访问/imooc-signIn.html 放行 不需要身份认证
                 .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage()
-                        , "/code/image").permitAll()
+                        , "/code/image","/code/sms").permitAll()
                 //任何请求
                 .anyRequest()
                 //都需要身份认证
