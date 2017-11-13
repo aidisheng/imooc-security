@@ -18,6 +18,10 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
+import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM;
+import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_UNAUTHENTICATION_URL;
+import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX;
+
 /**
  * Created by 邓仁波 on 2017-11-2.
  */
@@ -42,7 +46,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
-//        tokenRepository.setCreateTableOnStartup(true); 配置该属性第一次启动会建表 第二次启动要屏蔽 因为表已经存在 会报错
+        //配置该属性第一次启动会建表 第二次启动要屏蔽 因为表已经存在 会报错
+        tokenRepository.setCreateTableOnStartup(true);
         return tokenRepository;
     }
 
@@ -60,8 +65,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
-                .loginPage("/authentication/require")//设置自己的登录路径
-                .loginProcessingUrl("/authentication/form")//表单登录提交路径
+                .loginPage(DEFAULT_UNAUTHENTICATION_URL)//设置自己的登录路径
+                .loginProcessingUrl(DEFAULT_LOGIN_PROCESSING_URL_FORM)//表单登录提交路径
                 .successHandler(imoocAuthenticationSuccessHandler)//登录成功进行自己的操作
                 .failureHandler(imoocAuthenticationFailureHandler)//登录失败进行自己的操作
                 .and()
@@ -74,10 +79,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 //指定下面的都是授权的配置
                 .authorizeRequests()
                 //访问/imooc-signIn.html 放行 不需要身份认证
-                .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage()
-                        , "/code/*"
+                .antMatchers(DEFAULT_UNAUTHENTICATION_URL, securityProperties.getBrowser().getLoginPage()
+                        , DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*"
                 ).permitAll()
-
                 //任何请求
                 .anyRequest()
                 //都需要身份认证
