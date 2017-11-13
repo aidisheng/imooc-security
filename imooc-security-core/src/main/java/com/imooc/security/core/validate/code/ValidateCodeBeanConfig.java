@@ -18,7 +18,7 @@ public class ValidateCodeBeanConfig {
     private SecurityProperties securityProperties;
 
     @Bean(name = "imageValidateCodeGenerator")
-    //如果存在名为imageValidateCodeGenerator的就不注册 不存在以名为imageValidateCodeGenerator注册
+    //如果存在名为imageValidateCodeGenerator的实例就不注册
     @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
     public ValidateCodeGenerator imageCodeGenerator() {
         return new ImageCodeGenerator();
