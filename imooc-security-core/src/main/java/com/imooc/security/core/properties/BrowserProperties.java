@@ -6,6 +6,7 @@ package com.imooc.security.core.properties;
 public class BrowserProperties {
     private String loginPage = "/imooc-signIn.html";
     private LoginType loginType = LoginType.JSON;
+    //记住我的持续时间 秒
     private int rememberMeSeconds = 3600;
 
     public String getLoginPage() {

@@ -9,7 +9,7 @@ public class SmsCodeProperties {
     private int length = 6;
     //验证码有效时间
     private int expireIn = 60;
-
+    //拦截url
     private String url;
 
     public String getUrl() {

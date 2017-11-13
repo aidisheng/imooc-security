@@ -12,7 +12,7 @@ public class ImageCodeProperties extends SmsCodeProperties {
     private int width = 67;
     //验证码高度
     private int height = 23;
-
+ //拦截url
     private String url;
 
     public String getUrl() {

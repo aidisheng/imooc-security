@@ -22,6 +22,11 @@ public class ValidateCodeProcessorHolder {
 		return findValidateCodeProcessor(type.toString().toLowerCase());
 	}
 
+	/**
+	 * 查找验证码处理器
+	 * @param type
+	 * @return
+	 */
 	public ValidateCodeProcessor findValidateCodeProcessor(String type) {
 		String name = type.toLowerCase() + ValidateCodeProcessor.class.getSimpleName();
 		ValidateCodeProcessor processor = validateCodeProcessors.get(name);

@@ -13,6 +13,7 @@ import java.util.Random;
 
 /**
  * Created by 邓仁波 on 2017-11-9.
+ *默认图片生成器
  */
 public class ImageCodeGenerator implements ValidateCodeGenerator {
    @Autowired

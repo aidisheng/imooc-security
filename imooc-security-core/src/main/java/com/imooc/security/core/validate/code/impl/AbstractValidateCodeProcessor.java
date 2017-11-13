@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.imooc.security.core.validate.code.impl;
 
 import java.util.Map;

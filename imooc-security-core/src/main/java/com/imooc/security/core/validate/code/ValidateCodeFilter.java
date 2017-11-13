@@ -22,6 +22,7 @@ import java.util.Set;
 
 /**
  * Created by 邓仁波 on 2017-11-7.
+ * 验证码过滤器
  */
 @Component("validateCodeFilter")
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
@@ -79,14 +80,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(
-     * javax.servlet.http.HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
-     */
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {

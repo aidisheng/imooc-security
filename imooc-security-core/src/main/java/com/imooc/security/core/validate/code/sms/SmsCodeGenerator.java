@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * Created by 邓仁波 on 2017-11-9.
+ * 默认短信验证码生成器
  */
 @Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
@@ -20,14 +21,5 @@ public class SmsCodeGenerator implements ValidateCodeGenerator {
     public ValidateCode generate(ServletWebRequest request) {
         String code = RandomStringUtils.randomNumeric(securityProperties.getCode().getSms().getLength());
         return new ValidateCode(code, securityProperties.getCode().getSms().getExpireIn());
-    }
-
-
-    public SecurityProperties getSecurityProperties() {
-        return securityProperties;
-    }
-
-    public void setSecurityProperties(SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
     }
 }

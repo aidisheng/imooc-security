@@ -56,9 +56,6 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-//        validateCodeFilter.setAuthenticationFailureHandler(imoocAuthenticationFailureHandler);
-//        validateCodeFilter.afterPropertiesSet();
         //表单登录
         http
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
