@@ -12,6 +12,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {
     @Override
     public ImageCode generate(ServletWebRequest request) {
+
         System.out.println("生成图像验证码");
         return null;
     }
