@@ -29,10 +29,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private ImoocAuthenticationSuccessHandler imoocAuthenticationSuccessHandler;
     @Autowired
     private ImoocAuthenticationFailureHandler imoocAuthenticationFailureHandler;
+
     @Autowired
     private DataSource dataSource;
+
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -52,10 +56,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setAuthenticationFailureHandler(imoocAuthenticationFailureHandler);
-        validateCodeFilter.setSecurityProperties(securityProperties);
-        validateCodeFilter.afterPropertiesSet();
+//        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+//        validateCodeFilter.setAuthenticationFailureHandler(imoocAuthenticationFailureHandler);
+//        validateCodeFilter.afterPropertiesSet();
         //表单登录
         http
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
@@ -75,7 +78,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //访问/imooc-signIn.html 放行 不需要身份认证
                 .antMatchers("/authentication/require", securityProperties.getBrowser().getLoginPage()
-                        , "/code/image","/code/sms").permitAll()
+                        , "/code/*"
+                ).permitAll()
+
                 //任何请求
                 .anyRequest()
                 //都需要身份认证

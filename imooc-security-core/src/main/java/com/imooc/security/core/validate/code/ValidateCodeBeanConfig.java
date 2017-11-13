@@ -1,6 +1,7 @@
 package com.imooc.security.core.validate.code;
 
 import com.imooc.security.core.properties.SecurityProperties;
+import com.imooc.security.core.validate.code.image.ImageCodeGenerator;
 import com.imooc.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.imooc.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,11 @@ public class ValidateCodeBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
 
-    @Bean
-    //如果存在名为imageCodeGenerator的就不注册 不存在以名为imageCodeGenerator注册
-    @ConditionalOnMissingBean(name = "imageCodeGenerator")
+    @Bean(name = "imageValidateCodeGenerator")
+    //如果存在名为imageValidateCodeGenerator的就不注册 不存在以名为imageValidateCodeGenerator注册
+    @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
     public ValidateCodeGenerator imageCodeGenerator() {
-        ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
-        codeGenerator.setSecurityProperties(securityProperties);
-        return codeGenerator;
+        return new ImageCodeGenerator();
     }
 
     @Bean
