@@ -9,7 +9,7 @@ public class ImageCodeProperties {
     //验证码高度
     private int height = 23;
     //验证码位数
-    private int lenght = 4;
+    private int length = 4;
     //验证码有效时间
     private int expireIn = 60;
 
@@ -39,12 +39,12 @@ public class ImageCodeProperties {
         this.height = height;
     }
 
-    public int getLenght() {
-        return lenght;
+    public int getLength() {
+        return length;
     }
 
-    public void setLenght(int lenght) {
-        this.lenght = lenght;
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public int getExpireIn() {
