@@ -1,14 +1,12 @@
 /**
  * 
  */
-package com.imooc.security.core.properties.validate.code;
+package com.imooc.security.core.validate.code;
 
 import java.time.LocalDateTime;
 
-
 /**
- * @author zhailiang
- *
+ * 验证码
  */
 public class ValidateCode {
 	

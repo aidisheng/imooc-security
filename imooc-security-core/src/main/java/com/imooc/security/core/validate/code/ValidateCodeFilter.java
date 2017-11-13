@@ -1,4 +1,4 @@
-package com.imooc.security.core.properties.validate.code;
+package com.imooc.security.core.validate.code;
 
 import com.imooc.security.core.properties.SecurityProperties;
 import org.apache.commons.lang3.StringUtils;

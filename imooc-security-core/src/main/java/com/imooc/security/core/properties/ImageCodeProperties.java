@@ -3,15 +3,15 @@ package com.imooc.security.core.properties;
 /**
  * Created by 邓仁波 on 2017-11-9.
  */
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
+    public ImageCodeProperties() {
+        setLength(4);
+    }
+
     //验证码宽度
     private int width = 67;
     //验证码高度
     private int height = 23;
-    //验证码位数
-    private int length = 4;
-    //验证码有效时间
-    private int expireIn = 60;
 
     private String url;
 
@@ -39,19 +39,5 @@ public class ImageCodeProperties {
         this.height = height;
     }
 
-    public int getLength() {
-        return length;
-    }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getExpireIn() {
-        return expireIn;
-    }
-
-    public void setExpireIn(int expireIn) {
-        this.expireIn = expireIn;
-    }
 }

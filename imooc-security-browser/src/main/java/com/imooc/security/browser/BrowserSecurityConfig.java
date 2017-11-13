@@ -3,7 +3,7 @@ package com.imooc.security.browser;
 import com.imooc.security.browser.authentication.ImoocAuthenticationFailureHandler;
 import com.imooc.security.browser.authentication.ImoocAuthenticationSuccessHandler;
 import com.imooc.security.core.properties.SecurityProperties;
-import com.imooc.security.core.properties.validate.code.ValidateCodeFilter;
+import com.imooc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

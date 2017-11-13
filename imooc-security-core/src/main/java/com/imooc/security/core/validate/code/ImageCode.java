@@ -1,4 +1,4 @@
-package com.imooc.security.core.properties.validate.code;
+package com.imooc.security.core.validate.code;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
