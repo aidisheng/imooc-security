@@ -57,16 +57,19 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-
+        //添加表单登录提交地址需要验证图片验证码
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
+        //添加自己配置的要验证图片验证码的url
         addUrlToMap(securityProperties.getCode().getImage().getUrl(), ValidateCodeType.IMAGE);
-
+        //添加手机验证地址需要验证图片验证码
         urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
+        //添加自己配置的要验证短信验证码的url
         addUrlToMap(securityProperties.getCode().getSms().getUrl(), ValidateCodeType.SMS);
     }
 
     /**
-     * 讲系统中配置的需要校验验证码的URL根据校验的类型放入map
+     * 把系统中配置的需要校验验证码的URL根据校验的类型放入map
+     * k url v ValidateCodeType
      *
      * @param urlString
      * @param type
