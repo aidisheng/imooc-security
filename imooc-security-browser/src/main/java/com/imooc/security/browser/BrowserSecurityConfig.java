@@ -47,7 +47,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         //配置该属性第一次启动会建表 第二次启动要屏蔽 因为表已经存在 会报错
-        tokenRepository.setCreateTableOnStartup(true);
+//        tokenRepository.setCreateTableOnStartup(true);
         return tokenRepository;
     }
 
