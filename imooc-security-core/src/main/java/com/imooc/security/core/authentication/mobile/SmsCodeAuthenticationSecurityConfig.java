@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by 邓仁波 on 2017-11-14.
+ * 短信登录相关配置
  */
 @Component
 public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {

@@ -1,47 +1,41 @@
 package com.imooc.security.browser;
 
-import com.imooc.security.browser.authentication.ImoocAuthenticationFailureHandler;
-import com.imooc.security.browser.authentication.ImoocAuthenticationSuccessHandler;
+import com.imooc.security.core.authentication.AbstractChannelSecurityConfig;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.properties.SecurityProperties;
-import com.imooc.security.core.validate.code.ValidateCodeFilter;
+import com.imooc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
 
-import static com.imooc.security.core.properties.SecurityConstants.*;
-
 /**
  * Created by 邓仁波 on 2017-11-2.
+ * 游览器特有配置
  */
 @Configuration
-public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SecurityProperties securityProperties;
-    @Autowired
-    private ImoocAuthenticationSuccessHandler imoocAuthenticationSuccessHandler;
-    @Autowired
-    private ImoocAuthenticationFailureHandler imoocAuthenticationFailureHandler;
 
     @Autowired
     private DataSource dataSource;
 
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
+
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -62,33 +56,37 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //表单登录
-        http
-                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
-                .loginPage(DEFAULT_UNAUTHENTICATION_URL)//设置自己的登录路径
-                .loginProcessingUrl(DEFAULT_LOGIN_PROCESSING_URL_FORM)//表单登录提交路径
-                .successHandler(imoocAuthenticationSuccessHandler)//登录成功进行自己的操作
-                .failureHandler(imoocAuthenticationFailureHandler)//登录失败进行自己的操作
+
+        applyPasswordAuthenticationConfig(http);
+
+        http.apply(validateCodeSecurityConfig)
+
                 .and()
-                .rememberMe().tokenRepository(persistentTokenRepository())//配置记住我的数据源
+                .apply(smsCodeAuthenticationSecurityConfig)
+
+                //游览器记住我配置
+                .and()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())//配置记住我的数据源
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())//配置记住我的过期时间
                 .userDetailsService(userDetailsService)//设置登录逻辑
-//        //弹窗口登录
-//        http.httpBasic()
+
+                //授权的配置
                 .and()
-                //指定下面的都是授权的配置
                 .authorizeRequests()
-                //访问/imooc-signIn.html 放行 不需要身份认证
-                .antMatchers(DEFAULT_UNAUTHENTICATION_URL, securityProperties.getBrowser().getLoginPage()
-                        , DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*"
-                ).permitAll()
-                //任何请求
+                .antMatchers(
+                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+                        securityProperties.getBrowser().getLoginPage(),
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+                        "/user/regist")
+                .permitAll()//放行
                 .anyRequest()
-                //都需要身份认证
-                .authenticated()
-                .and().csrf().disable()
-                .apply(smsCodeAuthenticationSecurityConfig);
-//        super.configure(http);
+                .authenticated()//其他路径都需要验证
+                .and()
+                .csrf().disable();
+
     }
+
+
 }
