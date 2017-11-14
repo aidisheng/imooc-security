@@ -1,10 +1,12 @@
 package com.imooc.security.core.properties;
 
+import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
+
 /**
  * Created by 邓仁波 on 2017-11-3.
  */
 public class BrowserProperties {
-    private String loginPage = "/imooc-signIn.html";
+    private String loginPage = DEFAULT_LOGIN_PAGE_URL;
     private LoginType loginType = LoginType.JSON;
     //记住我的持续时间 秒
     private int rememberMeSeconds = 3600;
