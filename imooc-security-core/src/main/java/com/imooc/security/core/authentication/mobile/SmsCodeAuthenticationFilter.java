@@ -24,13 +24,14 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
 
     /**
      * 认证流程
+     *
      * @param request
      * @param response
      * @return
      * @throws AuthenticationException
      */
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-         //判断请求是不是post
+        //判断请求是不是post
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         } else {
@@ -58,6 +59,7 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
 
     /**
      * 把请求信息也放到Token里面
+     *
      * @param request
      * @param authRequest
      */
