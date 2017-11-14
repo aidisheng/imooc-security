@@ -2,6 +2,7 @@ package com.imooc.security.browser;
 
 import com.imooc.security.browser.authentication.ImoocAuthenticationFailureHandler;
 import com.imooc.security.browser.authentication.ImoocAuthenticationSuccessHandler;
+import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityProperties;
 import com.imooc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
-import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM;
-import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_UNAUTHENTICATION_URL;
-import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX;
+import static com.imooc.security.core.properties.SecurityConstants.*;
 
 /**
  * Created by 邓仁波 on 2017-11-2.
@@ -41,6 +40,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -80,13 +81,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //访问/imooc-signIn.html 放行 不需要身份认证
                 .antMatchers(DEFAULT_UNAUTHENTICATION_URL, securityProperties.getBrowser().getLoginPage()
-                        , DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*"
+                        , DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*"
                 ).permitAll()
                 //任何请求
                 .anyRequest()
                 //都需要身份认证
                 .authenticated()
-                .and().csrf().disable();
-        super.configure(http);
+                .and().csrf().disable()
+                .apply(smsCodeAuthenticationSecurityConfig);
+//        super.configure(http);
     }
 }
