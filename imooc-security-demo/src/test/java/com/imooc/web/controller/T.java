@@ -1,6 +1,7 @@
 package com.imooc.web.controller;
 
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -18,5 +19,11 @@ public class T {
         String forObject = template.getForObject("https://javawind.net/p131", String.class, map);
 
         System.out.println(forObject);
+    }
+    @Test
+    public void f1(){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("123456");
+        System.out.println(encode);
     }
 }

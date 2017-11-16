@@ -25,7 +25,7 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
     }
 
     /**
-     * 认证流程
+     * 获取手机号封装到SmsCodeAuthenticationToken实例中
      *
      * @param request
      * @param response

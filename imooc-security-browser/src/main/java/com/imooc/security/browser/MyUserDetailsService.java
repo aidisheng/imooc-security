@@ -18,11 +18,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyUserDetailsService implements UserDetailsService {
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
+//    @Autowired
     //注册账号的时候用 passwordEncoder.encode() 加密
     //验证的时候 loadUserByUsername password直接放入加密前的 字符即可 不用自己解密
-    private PasswordEncoder passwordEncoder;
+//    private PasswordEncoder passwordEncoder;
 
+    /**
+     * 根据用户名获取用户信息
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException 用户不存在
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("登录用户名: " + username);
@@ -32,7 +38,7 @@ public class MyUserDetailsService implements UserDetailsService {
         //$2a$10$2pnnzjVevYW0A.DAD2tfUO.RVzesPqEwmc/IJC896x9kqeqd.jNsS 为你数据库密码
         return new User(username, "$2a$10$2pnnzjVevYW0A.DAD2tfUO.RVzesPqEwmc/IJC896x9kqeqd.jNsS"
                 //账号可用，账号没过期,凭证没过期,账号没被锁定
-                , true, true, true, true
+                , false, true, true, true
                 , AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 }
