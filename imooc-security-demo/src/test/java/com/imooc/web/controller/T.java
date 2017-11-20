@@ -20,10 +20,18 @@ public class T {
 
         System.out.println(forObject);
     }
+
     @Test
-    public void f1(){
+    public void f1() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode("123456");
         System.out.println(encode);
+    }
+
+    @Test
+    public void steamTest() {
+        new Thread(() -> System.out.println("lx nsbss !")).start();
+
+        new Thread(() -> System.out.println("lx nsbss !")).start();
     }
 }

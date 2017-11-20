@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -46,13 +44,6 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
         return tokenRepository;
     }
 
-    //登录密码加密
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        //BCryptPasswordEncoder 为Security实现的
-        //也可以用自己的加密 方法实现PasswordEncoder接口 实现加密方法和 比较方法即可
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
