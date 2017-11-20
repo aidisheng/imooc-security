@@ -51,10 +51,10 @@ public class MyUserDetailsService implements UserDetailsService, SocialUserDetai
         //根据查找到的用户信息判断账号是否被冻结
 
         //$2a$10$2pnnzjVevYW0A.DAD2tfUO.RVzesPqEwmc/IJC896x9kqeqd.jNsS 为你数据库密码
-        return new SocialUser(username, "$2a$10$2pnnzjVevYW0A.DAD2tfUO.RVzesPqEwmc/IJC896x9kqeqd.jNsS"
+        return new SocialUser(username, "$2a$10$DV7pz/zKri3NLSZY1R9.fuvUCQchrbEyMOnyKZEk7AuC1pqtX340."
                 //账号可用，账号没过期,凭证没过期,账号没被锁定
-                , false, true, true, true
-                , AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                , true, true, true, true
+                , AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
     }
 
 }

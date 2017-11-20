@@ -15,8 +15,11 @@ spring:
     host: 123.207.157.149
     port: 6379
 
-
-
+security:
+  oauth2:
+    client:
+      clientId: imooc
+      clientSecret: imoocsecret
 
 #配置自己的登录页面
 imooc:

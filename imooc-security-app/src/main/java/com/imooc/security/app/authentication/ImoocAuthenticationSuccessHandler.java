@@ -30,7 +30,7 @@ public class ImoocAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        logger.info("登 录成功");
+        logger.info("登录成功");
         if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             httpServletResponse.setContentType("application/json;charset=UTF-8");
             httpServletResponse.setStatus(HttpStatus.OK.value());
