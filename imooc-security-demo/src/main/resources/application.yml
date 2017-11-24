@@ -34,3 +34,7 @@ imooc:
         url: /user,/user/*
       sms:
         url: /user,/user/*
+    social：
+      qq:
+        app-id:
+        app-secret:
