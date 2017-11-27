@@ -34,7 +34,9 @@ imooc:
         url: /user,/user/*
       sms:
         url: /user,/user/*
-    social：
+    social:
       qq:
-        app-id:
-        app-secret:
+        app-id: 1
+        app-secret: 1
+        providerId: callback.do
+      filterProcessesUrl: /qqLogin
