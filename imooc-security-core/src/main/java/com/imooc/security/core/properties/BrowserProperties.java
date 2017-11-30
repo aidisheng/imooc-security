@@ -6,6 +6,17 @@ import static com.imooc.security.core.properties.SecurityConstants.DEFAULT_LOGIN
  * Created by 邓仁波 on 2017-11-3.
  */
 public class BrowserProperties {
+
+    private String signUpUrl = "/imooc-signUp.html";
+
+    public String getSignUpUrl() {
+        return signUpUrl;
+    }
+
+    public void setSignUpUrl(String signUpUrl) {
+        this.signUpUrl = signUpUrl;
+    }
+
     private String loginPage = DEFAULT_LOGIN_PAGE_URL;
     private LoginType loginType = LoginType.JSON;
     //记住我的持续时间 秒

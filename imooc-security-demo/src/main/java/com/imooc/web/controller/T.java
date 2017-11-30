@@ -14,4 +14,9 @@ public class T {
     public ModelAndView c(){
         return new ModelAndView("t");
     }
+
+    @RequestMapping("/index")
+    public ModelAndView i(){
+        return new ModelAndView("index");
+    }
 }

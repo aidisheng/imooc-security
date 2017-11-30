@@ -27,6 +27,7 @@ imooc:
     browser:
 #      loginPage: /demo-signIn.html
       LoginType: JSON
+      signUpUrl: /demo-signUp.html
     code:
       image:
         length: 6
