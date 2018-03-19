@@ -1,9 +1,12 @@
 package com.imooc.web.controller;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,5 +36,12 @@ public class T {
         new Thread(() -> System.out.println("lx nsbss !")).start();
 
         new Thread(() -> System.out.println("lx nsbss !")).start();
+    }
+
+    @Test
+    public void f12() throws IOException {
+        File file = new File("C:\\pic\\2.jpg");
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+        FileUtils.writeByteArrayToFile(new File("C:\\pic\\4.jpg"),bytes);
     }
 }
