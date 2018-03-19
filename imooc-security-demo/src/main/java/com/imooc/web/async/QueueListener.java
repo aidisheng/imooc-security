@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.imooc.web.async;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,34 +12,41 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by 邓仁波 on 2017-11-1.
+ * @author zhailiang
+ *
  */
 @Component
 public class QueueListener implements ApplicationListener<ContextRefreshedEvent> {
-    @Autowired
-    private DeferredResultHolder deferredResultHolder;
-    @Autowired
-    private MockQueue mockQueue;
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        new Thread(() -> {
-            while (true) {
-                if (StringUtils.isNotBlank(mockQueue.getCompleteOrder())) {
-                    String orderNum = mockQueue.getCompleteOrder();
-                    logger.info("返回订单处理结果:" + orderNum);
-                    deferredResultHolder.getMap().get("orderNum").setResult("订单处理成功");
-                    mockQueue.setCompleteOrder(null);
-                } else {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+	@Autowired
+	private MockQueue mockQueue;
 
-    }
+	@Autowired
+	private DeferredResultHolder deferredResultHolder;
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		new Thread(() -> {
+			while (true) {
+
+				if (StringUtils.isNotBlank(mockQueue.getCompleteOrder())) {
+					
+					String orderNumber = mockQueue.getCompleteOrder();
+					logger.info("返回订单处理结果:"+orderNumber);
+					deferredResultHolder.getMap().get(orderNumber).setResult("place order success");
+					mockQueue.setCompleteOrder(null);
+					
+				}else{
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}).start();
+	}
 }

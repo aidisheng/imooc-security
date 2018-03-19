@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.imooc.web.async;
 
 import org.springframework.stereotype.Component;
@@ -7,17 +10,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by 邓仁波 on 2017-11-1.
+ * @author zhailiang
+ *
  */
 @Component
 public class DeferredResultHolder {
-    private Map<String,DeferredResult<String>>map=new HashMap<>();
+	
+	private Map<String, DeferredResult<String>> map = new HashMap<String, DeferredResult<String>>();
 
-    public Map<String, DeferredResult<String>> getMap() {
-        return map;
-    }
+	public Map<String, DeferredResult<String>> getMap() {
+		return map;
+	}
 
-    public void setMap(Map<String, DeferredResult<String>> map) {
-        this.map = map;
-    }
+	public void setMap(Map<String, DeferredResult<String>> map) {
+		this.map = map;
+	}
+	
 }
